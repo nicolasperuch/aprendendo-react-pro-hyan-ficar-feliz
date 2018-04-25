@@ -1,6 +1,8 @@
 
 import React, { Component } from 'react';
 import './App.css';
+import { Input } from './components/Input';
+import { Button } from './components/Button';
 
 class App extends Component {
 
@@ -12,22 +14,18 @@ class App extends Component {
             list: [],
             outputList: ''
           };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReset = this.handleReset.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleChange(value) {
+    this.setState({value});
   }
 
-  handleSubmit() {
+  handleSubmit(value) {
     this.state.list.push(this.state.value)
     this.setState({
             outputList: this.updateList()
           })
-  }
+  } 
   
   handleReset() {
     this.setState({
@@ -49,20 +47,21 @@ class App extends Component {
   render() {
     return (     
       <div>
-        <div>
+        <header>
           <div className="app center img-background">
-            <div>
-              <input className="width-size" placeholder="Search for your city" type="text" value={this.state.value} onChange={this.handleChange}/>
-            </div>
+              <Input handleChange={this.handleChange.bind(this)} value={this.state.value}/>
           </div>
-        </div>
-        <div className="center">
-          <button className="waves-effect waves-light btn-large basic-margin" onClick={this.handleSubmit}> Search </button>
-          <button className="waves-effect waves-light btn-large basic-margin" onClick={this.handleReset}> Reset </button>
-        </div>
-        <div className="label">
+        </header>
+        <section className="center">
+          <Button handleClick={this.handleSubmit.bind(this)} name='Search' />
+          <Button handleClick={this.handleReset.bind(this)} name='Reset' />
+        </section>
+        <section className="label center">
           {this.state.outputList}
-        </div>
+        </section>
+        <footer>
+          <label> TODO </label>
+        </footer>
       </div>
     )
   }

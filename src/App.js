@@ -22,9 +22,9 @@ class App extends Component {
 
   handleSubmit(value) {
     this.state.list.push(this.state.value)
-    this.setState({
-            outputList: this.updateList()
-          })
+      this.setState({
+              outputList: this.updateList()
+            })
   } 
   
   handleReset() {
@@ -37,12 +37,24 @@ class App extends Component {
 
   updateList() {
      let listItens = this.state.list.map((item) =>
-      <li key={item}>{item}</li>
+      <tr><td>{item}</td></tr>
     );
     return (
-      <ul>{listItens}</ul>
+      <table className="highlight centered responsive-table">
+        <thead>
+          <tr>
+            <th>
+              Nome
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {listItens}
+        </tbody>
+        </table>
     );
   }
+  
 
   render() {
     return (     
@@ -56,8 +68,8 @@ class App extends Component {
           <Button handleClick={this.handleSubmit.bind(this)} name='Search' />
           <Button handleClick={this.handleReset.bind(this)} name='Reset' />
         </section>
-        <section className="label center">
-          {this.state.outputList}
+        <section className="center table">
+            {this.state.outputList}
         </section>
         <footer>
           <label> TODO </label>

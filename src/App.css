@@ -25,10 +25,11 @@
 
 .footer {
     padding-top: 250px;
-    margin: 200px 0px 0px;
+    margin: 194px 0px 0px;
 }
 
 .img-footer {
     background-image: url('http://www.pngmart.com/files/5/City-PNG-Picture.png');
     background-size: contain;
+    filter: blur(5px);
 }

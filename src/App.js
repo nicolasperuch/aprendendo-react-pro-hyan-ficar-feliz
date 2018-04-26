@@ -18,21 +18,30 @@ class App extends Component {
             value: '',
             list: [],
             outputList: '',
-            newBgPosition: 0
+            newBgPosition: 0,
+            newOpacity: 0.3
           };
   }
 
-  shouldMoveFooterForward(value) {
+  isTiping(value) {
     return this.state.value < value
   }
 
   handleChange(value) {
-    this.shouldMoveFooterForward(value) ? this.moveFooter(1) : this.moveFooter(-1)
+    this.isTiping(value) ? this.changeFooterOpacity(0.01) : this.changeFooterOpacity(-0.01)
     this.setState({value});
   }
 
   moveFooter(displacement){
     this.setState({newBgPosition: this.state.newBgPosition + displacement})
+  }
+
+  changeFooterOpacity(value){
+    this.setState({newOpacity: this.state.newOpacity + value})
+  }
+
+  resetOpacity(){
+    this.setState({newOpacity: 0.3})
   }
 
   handleSubmit(value) {
@@ -70,14 +79,18 @@ class App extends Component {
         <section className="center">
             <Button handleClick={this.handleSubmit.bind(this)} name='Search' />
             <Button handleClick={this.handleReset.bind(this)} name='Reset' />
+            <Button handleClick={this.resetOpacity.bind(this)} name='Reset Opacity' />
         </section>
         <section className="center table">
             <div id="contentTable">
-              <Teste />
               <ContentTable itens={this.state.outputList}/>
             </div>
         </section>
-        <footer id="footer" className="img-footer footer" style={{backgroundPosition: this.state.newBgPosition}}>
+        <footer id="footer" className="img-footer footer" 
+                style={{
+                    backgroundPosition: this.state.newBgPosition,
+                    opacity: this.state.newOpacity
+                    }}>
             <Footer/>
         </footer>
       </div>

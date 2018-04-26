@@ -18,22 +18,17 @@
     background-position: 50px;
 }
 
-#hyan {
-    margin: auto;
-    background-image: url('https://scontent.fpoa8-2.fna.fbcdn.net/v/t31.0-8/775744_556895594399226_1807380031_o.jpg?_nc_cat=0&_nc_eui2=v1%3AAeGT5RK4suMWJmpuX29mAWLOkM04TVVM4BM3BeOlNjNGFcDN1QPOvXmOsXW7BcHhrRfx1zOBPDvpGFnqMZnWt7-NwESDPoCC0-gwZypmJdFPgQ&oh=0cd6a6708cc78a267bb250b81a7eed71&oe=5B5E7BBE');
-    background-position: 0;
-    height: 400px;
-    width: 600px;
-    background-size: contain;
-    background-repeat: no-repeat;    
-}
-
-.label {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-}
-
 .table {
     margin: 50px 250px;
     padding: 15px;
+}
+
+.footer {
+    padding-top: 250px;
+    margin: 200px 0px 0px;
+}
+
+.img-footer {
+    background-image: url('http://www.pngmart.com/files/5/City-PNG-Picture.png');
+    background-size: contain;
 }

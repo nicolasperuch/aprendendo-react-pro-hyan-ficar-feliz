@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import './App.css';
 import { Input } from './components/Input';
 import { Button } from './components/Button';
+import { ContentTable } from './components/ContentTable';
+import { Footer } from './components/Footer';
 
 class App extends Component {
 
@@ -12,19 +14,30 @@ class App extends Component {
     this.state = {
             value: '',
             list: [],
-            outputList: ''
+            outputList: '',
+            newBgPosition: 0
           };
   }
 
+  shouldMoveFooterForward(value) {
+    return this.state.value < value
+  }
+
   handleChange(value) {
+    this.shouldMoveFooterForward(value) ? this.moveFooter(1) : this.moveFooter(-1)
     this.setState({value});
+  }
+
+  moveFooter(displacement){
+    this.setState({newBgPosition: this.state.newBgPosition + displacement})
   }
 
   handleSubmit(value) {
     this.state.list.push(this.state.value)
-      this.setState({
-              outputList: this.updateList()
-            })
+    this.setState({
+            outputList: this.updateList()
+          })
+    document.querySelector('#contentTable').style.display = 'block'
   } 
   
   handleReset() {
@@ -33,28 +46,15 @@ class App extends Component {
             outputList: '',
             list: []
           })
+    document.querySelector('#contentTable').style.display = 'none'
  }
 
   updateList() {
-     let listItens = this.state.list.map((item) =>
+    let listItens = this.state.list.map((item) =>
       <tr><td>{item}</td></tr>
     );
-    return (
-      <table className="highlight centered responsive-table">
-        <thead>
-          <tr>
-            <th>
-              Nome
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {listItens}
-        </tbody>
-        </table>
-    );
+    return (listItens);
   }
-  
 
   render() {
     return (     
@@ -65,14 +65,16 @@ class App extends Component {
           </div>
         </header>
         <section className="center">
-          <Button handleClick={this.handleSubmit.bind(this)} name='Search' />
-          <Button handleClick={this.handleReset.bind(this)} name='Reset' />
+            <Button handleClick={this.handleSubmit.bind(this)} name='Search' />
+            <Button handleClick={this.handleReset.bind(this)} name='Reset' />
         </section>
         <section className="center table">
-            {this.state.outputList}
+            <div id="contentTable">
+              <ContentTable itens={this.state.outputList}/>
+            </div>
         </section>
-        <footer>
-          <label> TODO </label>
+        <footer id="footer" className="img-footer footer" style={{backgroundPosition: this.state.newBgPosition}}>
+            <Footer/>
         </footer>
       </div>
     )

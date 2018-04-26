@@ -1,10 +1,13 @@
 
 import React, { Component } from 'react';
+import injectSheet from 'react-jss'
 import './App.css';
 import { Input } from './components/Input';
 import { Button } from './components/Button';
 import { ContentTable } from './components/ContentTable';
 import { Footer } from './components/Footer';
+import Teste from './components/Teste';
+
 
 class App extends Component {
 
@@ -70,6 +73,7 @@ class App extends Component {
         </section>
         <section className="center table">
             <div id="contentTable">
+              <Teste />
               <ContentTable itens={this.state.outputList}/>
             </div>
         </section>

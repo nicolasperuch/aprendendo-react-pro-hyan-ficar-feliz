@@ -8,7 +8,10 @@ export class ContentTable extends Component{
                 <thead>
                     <tr>
                         <th>
-                            Name
+                            City
+                        </th>
+                        <th>
+                            Population
                         </th>
                     </tr>
                 </thead>

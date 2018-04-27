@@ -7,6 +7,8 @@ import { Button } from './components/Button';
 import { ContentTable } from './components/ContentTable';
 import { Footer } from './components/Footer';
 import Teste from './components/Teste';
+import axios from 'axios'
+
 
 
 class App extends Component {
@@ -16,11 +18,11 @@ class App extends Component {
 
     this.state = {
             value: '',
-            list: [],
+            responseList: [],
             outputList: '',
             newBgPosition: 0,
-            newOpacity: 0.3
-          };
+            opacityLevel: 0.3
+        };
   }
 
   isTiping(value) {
@@ -29,41 +31,45 @@ class App extends Component {
 
   handleChange(value) {
     this.isTiping(value) ? this.changeFooterOpacity(0.01) : this.changeFooterOpacity(-0.01)
-    this.setState({value});
+    this.setState({value})
+    this.getData(value)
   }
 
-  moveFooter(displacement){
-    this.setState({newBgPosition: this.state.newBgPosition + displacement})
+  getData(value){
+      this.resetResponseList()
+      return axios
+              .get('http://localhost:8080/getDataByName/' + value)
+              .then(response => {
+                      response.data.map((r) => 
+                        this.state.responseList.push(r.city)
+                      )
+                      this.setState({
+                        outputList: this.updateList()
+                      })
+                    }
+              );
+  }
+
+  resetResponseList(){
+    this.setState({
+      responseList: []
+    })
   }
 
   changeFooterOpacity(value){
-    this.setState({newOpacity: this.state.newOpacity + value})
+    this.setState({opacityLevel: this.state.opacityLevel + value})
   }
 
-  resetOpacity(){
-    this.setState({newOpacity: 0.3})
+  resetFooterOpacity(){
+    this.setState({opacityLevel: 0.3})
   }
-
-  handleSubmit(value) {
-    this.state.list.push(this.state.value)
-    this.setState({
-            outputList: this.updateList()
-          })
-    document.querySelector('#contentTable').style.display = 'block'
-  } 
-  
-  handleReset() {
-    this.setState({
-            value: '',
-            outputList: '',
-            list: []
-          })
-    document.querySelector('#contentTable').style.display = 'none'
- }
 
   updateList() {
-    let listItens = this.state.list.map((item) =>
-      <tr><td>{item}</td></tr>
+    let listItens = this.state.responseList.map((item) =>
+      <tr>
+        <td>{item.nome}</td>
+        <td>{item.populacao}</td>
+      </tr>
     );
     return (listItens);
   }
@@ -77,9 +83,7 @@ class App extends Component {
           </div>
         </header>
         <section className="center">
-            <Button handleClick={this.handleSubmit.bind(this)} name='Search' />
-            <Button handleClick={this.handleReset.bind(this)} name='Reset' />
-            <Button handleClick={this.resetOpacity.bind(this)} name='Reset Opacity' />
+            <Button handleClick={this.resetFooterOpacity.bind(this)} name='Reset Opacity' />
         </section>
         <section className="center table">
             <div id="contentTable">
@@ -88,8 +92,7 @@ class App extends Component {
         </section>
         <footer id="footer" className="img-footer footer" 
                 style={{
-                    backgroundPosition: this.state.newBgPosition,
-                    opacity: this.state.newOpacity
+                    opacity: this.state.opacityLevel
                     }}>
             <Footer/>
         </footer>
